@@ -1,0 +1,21 @@
+
+* {
+    color: #e5c39c;
+}
+body {
+    background-color: black;
+}
+.box {
+    text-align: center;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    background-color: #224667;
+    border: 1px solid #ffd0d0;
+    border-radius: 12px;
+    box-shadow: 3px 3px 13px 1px rgba(255, 255, 255, 0.5);
+}
+button {
+    background-color: #5a2821;
+}

@@ -1,7 +1,7 @@
 window.onload =function () {
-    let ad = document.createElement("a");
-    let adText = document.createTextNode("我是广告");
-    ad.setAttribute("href", "http://localhost:80/adlink");
-    ad.appendChild(adText);
-    document.body.appendChild(ad);
+    let btn = document.createElement("button");
+    let adText = document.createTextNode("我是js添加的按钮");
+    btn.appendChild(adText);
+    btn.onclick = function () {alert("你点击了这个按钮！")}
+    document.body.appendChild(btn);
 }
