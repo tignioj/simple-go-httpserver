@@ -37,11 +37,14 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 		errorHandler(w, r, http.StatusNotFound, "页面找不到了:"+path)
 		return
 	}
-	//if err != nil {
-	//	http.Error(w, err.Error(), http.StatusInternalServerError)
-	//}
 
 	fileType, err := getFileType(path)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	} else {
+		fileType = strings.ToLower(fileType)
+	}
+
 	switch fileType {
 	case "html":
 		w.Header().Set("Content-Type", "text/html")
@@ -49,12 +52,19 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 	case "css":
 		w.Header().Set("Content-Type", "text/css")
 		break
+	case "woff":
+		w.Header().Set("Content-Type", "font/woff2")
+		break
 	case "js":
 		w.Header().Set("Content-Type", "text/javascript")
+		break
+	case "svg":
+		w.Header().Set("Content-Type", "image/svg+xml")
 		break
 	}
 	w.Write(p.Body)
 }
+
 
 func getFileType(path string) (string, error) {
 	li := strings.LastIndex(path, ".")
