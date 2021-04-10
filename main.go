@@ -17,6 +17,49 @@ type FileObj struct {
 	Content []byte
 }
 
+var DefaultServerConfigPath = "server-config.json"
+/*配置初始化*/
+var serverConf = &ServerConfig{
+	Port: "8080",
+	Root: "./",
+	ContentType: map[string]string{
+		"html": "text/html",
+		"css":  "text/css",
+		"woff": "font/woff2",
+		"js":   "text/javascript",
+		"svg":  "image/svg+xml",
+		"ico":  "image/x-icon",
+	},
+
+}
+
+//帮助文档
+var helpJSON = `
+{
+  "-h": {
+    "usage": "show help",
+    "must_have_value": false
+  },
+  "-p": {
+    "value": "8080",
+    "usage": "server port",
+    "pattern": "^[0-9]+$",
+    "expect": "pure number",
+    "err": "invalid port"
+  },
+  "-r": {
+    "value": "./",
+    "usage": "web root",
+    "err": "invalid web root"
+  },
+  "-c": {
+    "usage": "path to server configuration",
+    "err": "invalid config path",
+    "value": "server-config.json"
+  }
+}
+`
+
 func errorHandler(w http.ResponseWriter, r *http.Request, status int, message string) {
 	w.WriteHeader(status)
 	if status == http.StatusNotFound {
@@ -54,9 +97,6 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(p)
 }
 
-func setContentType(w http.ResponseWriter, contentType string) {
-	w.Header().Set("Content-Type", contentType)
-}
 
 func getFileType(path string) (string, error) {
 	li := strings.LastIndex(path, ".")
@@ -94,19 +134,6 @@ func loadWebFile(filePath string) ([]byte, error) {
 	return file.Content, nil
 }
 
-/*配置初始化*/
-var serverConf = &ServerConfig{
-	Port: "8080",
-	Root: "./",
-	ContentType: map[string]string{
-		"html": "text/html",
-		"css":  "text/css",
-		"woff": "font/woff2",
-		"js":   "text/javascript",
-		"svg":  "image/svg+xml",
-		"ico":  "image/x-icon",
-	},
-}
 
 type ServerConfig struct {
 	Port        string            `json:"port"`
@@ -115,18 +142,22 @@ type ServerConfig struct {
 	Header      map[string]string `json:"header"`
 }
 
-var DefaultServerConfigPath = "server-config.json"
-
 func main() {
-	//argMap, argerr := argsmap.GetCommandLineArgMap("help.json", os.Args)
-	o, argerr := argsmap.NewCommandLineObj("help.json", os.Args)
-	if argerr != nil {
-		log.Fatal("server", argerr)
+	/*加载帮助文件*/
+	o, err := argsmap.NewCommandLineObj("help.json", os.Args)
+	if err != nil {
+		log.Println("server", "help file error:", err)
+		log.Println("server", "loading default helping config...")
+		/* 加载帮助文件失败，则使用默认配置 */
+		o, err = argsmap.NewCommandLineObjByJSON(helpJSON, os.Args)
+		if err != nil{
+			/* 仍然加载失败，程序结束*/
+			log.Fatalf("server", "load help json failed:" + fmt.Sprint(err))
+		}
 	}
 	argMap:= o.GetCommandLineMap
-	/*检测默认配置文件*/
 
-	/*先加载配置文件*/
+	/*加载服务器配置配置文件*/
 	if configPath, ok := argMap["-c"]; ok {
 		initConfig(configPath)
 		/*检查默认配置文件*/

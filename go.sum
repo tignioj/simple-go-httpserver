@@ -1,2 +1,6 @@
 github.com/tignioj/go-get-argsmap-from-commandline v1.0.1-0.20210410193735-97119a2e5a7c h1:ugs32AlAdNfBhLSrTC8l+cp4nI2nMWJiSolmvZnDM38=
 github.com/tignioj/go-get-argsmap-from-commandline v1.0.1-0.20210410193735-97119a2e5a7c/go.mod h1:KnvHMspKx/NMoKkMOlPhXVRmi3XtBalSJ8n0y4onjuo=
+github.com/tignioj/go-get-argsmap-from-commandline v1.0.1-0.20210410220015-76a5b38773b2 h1:yj/KcCoGAbWHfA9DxROBsrZdmozT47s/uWwAyqJb2Ds=
+github.com/tignioj/go-get-argsmap-from-commandline v1.0.1-0.20210410220015-76a5b38773b2/go.mod h1:KnvHMspKx/NMoKkMOlPhXVRmi3XtBalSJ8n0y4onjuo=
+github.com/tignioj/go-get-argsmap-from-commandline v1.0.1-0.20210410222912-9aff509698dc h1:m37ilpmYWmWnOjF4nOhjJkDQJhnH7+TxuaWHIqKZyKE=
+github.com/tignioj/go-get-argsmap-from-commandline v1.0.1-0.20210410222912-9aff509698dc/go.mod h1:KnvHMspKx/NMoKkMOlPhXVRmi3XtBalSJ8n0y4onjuo=
