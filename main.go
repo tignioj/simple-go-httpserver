@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	"tignioj.io/argsmap"
+	"github.com/tignioj/go-get-argsmap-from-commandline"
 )
 
 type FileObj struct {
@@ -124,11 +124,6 @@ func main() {
 		log.Fatal("server", argerr)
 	}
 	argMap:= o.GetCommandLineMap
-
-
-	if argerr != nil {
-		log.Fatal("server", argerr)
-	}
 	/*检测默认配置文件*/
 
 	/*先加载配置文件*/
