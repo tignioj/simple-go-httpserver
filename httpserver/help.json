@@ -1,0 +1,22 @@
+{
+  "-h": {
+    "usage": "show help",
+    "must_have_value": false
+  },
+  "-p": {
+    "value": "8080",
+    "usage": "server port",
+    "pattern": "\\d+",
+    "expect": "pure number",
+    "err": "invalid port"
+  },
+  "-r": {
+    "value": "./",
+    "usage": "web root",
+    "err": "invalid web root"
+  },
+  "-c": {
+    "usage": "path to server configuration",
+    "err": "invalid config path"
+  }
+}

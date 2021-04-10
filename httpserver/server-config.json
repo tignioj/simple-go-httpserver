@@ -1,0 +1,17 @@
+{
+  "port": "9999",
+  "root": "webpage",
+  "content_type": {
+    "html": "text/html",
+    "css": "text/css",
+    "woff": "font/woff2",
+    "js": "text/javascript",
+    "svg": "image/svg+xml",
+    "ico": "image/x-icon"
+  },
+  "header": {
+    "user": "zs",
+    "pwd": "123",
+    "secret": "sss"
+  }
+}
