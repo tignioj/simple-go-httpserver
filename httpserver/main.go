@@ -93,18 +93,6 @@ func loadWebFile(filePath string) ([]byte, error) {
 	}
 	return file.Content, nil
 }
-//
-//func showHelp() {
-//	fmt.Println(
-//		"用法: ./gohttpserver.exe {[参数]} {[值]}\n" +
-//			"参数:\n" +
-//			"    -p: 端口号\n" +
-//			"    -h: 显示帮助\n" +
-//			"    -l: 指定网页根目录\n" +
-//			"    -c: 指定配置文件\n" +
-//			"举例: 指定端口为9999, 网页根路径为./webpage" +
-//			"./gohttpserver.exe -p 9999 -r ./webpage")
-//}
 
 /*配置初始化*/
 var serverConf = &ServerConfig{
@@ -171,6 +159,11 @@ func main() {
 			return
 		}
 	}
+
+	if serverConf.Root == "" {
+		serverConf.Root = "./"
+	}
+
 
 	fmt.Println("Apply config", serverConf)
 	fmt.Printf("Listening: http://localhost:%s\n", serverConf.Port)

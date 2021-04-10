@@ -1,6 +1,6 @@
 {
-  "port": "9999",
-  "root": "webpage",
+  "port": "8088",
+  "root": "./webpage",
   "content_type": {
     "html": "text/html",
     "css": "text/css",
