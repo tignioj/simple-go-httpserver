@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/tignioj/go-get-argsmap-from-commandline"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"strings"
-	"github.com/tignioj/go-get-argsmap-from-commandline"
 )
 
 type FileObj struct {
@@ -18,6 +18,7 @@ type FileObj struct {
 }
 
 var DefaultServerConfigPath = "server-config.json"
+
 /*配置初始化*/
 var serverConf = &ServerConfig{
 	Port: "8080",
@@ -30,7 +31,6 @@ var serverConf = &ServerConfig{
 		"svg":  "image/svg+xml",
 		"ico":  "image/x-icon",
 	},
-
 }
 
 //帮助文档
@@ -97,7 +97,6 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(p)
 }
 
-
 func getFileType(path string) (string, error) {
 	li := strings.LastIndex(path, ".")
 	if li > len(path) {
@@ -134,7 +133,6 @@ func loadWebFile(filePath string) ([]byte, error) {
 	return file.Content, nil
 }
 
-
 type ServerConfig struct {
 	Port        string            `json:"port"`
 	Root        string            `json:"root"`
@@ -143,19 +141,12 @@ type ServerConfig struct {
 }
 
 func main() {
-	/*加载帮助文件*/
-	o, err := argsmap.NewCommandLineObj("help.json", os.Args)
+	/* 加载帮助文件失败，则使用默认配置 */
+	o, err := argsmap.NewCommandLineObjByJSON(helpJSON, os.Args)
 	if err != nil {
-		log.Println("server", "help file error:", err)
-		log.Println("server", "loading default helping config...")
-		/* 加载帮助文件失败，则使用默认配置 */
-		o, err = argsmap.NewCommandLineObjByJSON(helpJSON, os.Args)
-		if err != nil{
-			/* 仍然加载失败，程序结束*/
-			log.Fatalf("server", "load help json failed:" + fmt.Sprint(err))
-		}
+		log.Fatal("server",  err.Error())
 	}
-	argMap:= o.GetCommandLineMap
+	argMap := o.GetCommandLineMap
 
 	/*加载服务器配置配置文件*/
 	if configPath, ok := argMap["-c"]; ok {
@@ -189,7 +180,6 @@ func main() {
 	if serverConf.Root == "" {
 		serverConf.Root = "./"
 	}
-
 
 	fmt.Println("Apply config", serverConf)
 	fmt.Printf("Listening: http://localhost:%s\n", serverConf.Port)
